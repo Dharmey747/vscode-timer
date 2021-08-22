@@ -3,6 +3,12 @@
 	"displayName": "Timer",
 	"description": "An extension to track down your time spent coding.",
 	"version": "1.0.0",
+	"publisher": "dharmey",
+	"icon": "icon.png",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Dharmey747/vscode-timer.git"
+	},
 	"engines": {
 		"vscode": "^1.59.0"
 	},
