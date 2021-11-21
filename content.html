@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Analytics</title>
+    </head>
+
+    <body>
+        <h1 id="title">Timer Extension</h1>
+        <h2 id="time-coding"></h2>
+
+        <h3>Session History</h3>
+        <h4 id="history-null"></h4>
+        <table id="previous-sessions">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Session</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </body>
+
+    <script>
+        window.addEventListener('message', event => {
+            let sessions = event.data.sessions
+            var tableBody = document.getElementById("previous-sessions");
+
+            if (sessions.length <= 0) {
+                document.getElementById("previous-sessions").remove();
+                document.getElementById("history-null").innerHTML = "Past Coding Sessions will appear here."
+                document.getElementById("time-coding").innerHTML = "You haven't spent any time coding."
+                return;
+            }
+
+            var hours = 0
+            var minutes = 0
+            var seconds = 0
+
+            for (date in sessions) {
+                tableBody.innerHTML += `
+                    <tr>
+                        <td>${sessions[date].date}</td>
+                        <th>${sessions[date].duration}</th>
+                    </tr>
+                `
+                hours += parseInt(sessions[date].duration.split("h")[0]);
+                minutes += parseInt(sessions[date].duration.split("min")[0].split(" ")[1]);
+                if (minutes > 59) {
+                    hours += 1
+                    minutes = 0;
+                }
+
+                seconds += parseInt(sessions[date].duration.split("sec")[0].split(" ")[2]);
+                if (seconds > 59) {
+                    minutes += 1
+                    seconds = 0;
+                }
+
+                document.getElementById("time-coding").innerHTML = `You have spent ${hours} hours, ${minutes} minutes and ${seconds} seconds coding.`
+            }
+        });
+    </script>
+
+    <style>
+        body.vscode-light {
+            color: black;
+        }
+
+        body.vscode-dark {
+            color: white;
+        }
+
+        body.vscode-high-contrast {
+            color: red;
+        }
+
+        #title {
+            font-size: 50px;
+        }
+
+        table {
+            text-align: center;
+            border-collapse: separate; 
+            border-spacing: 13px;
+        }
+
+        tbody th {
+            padding: .5%;
+        }
+    </style>
+</html>

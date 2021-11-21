@@ -1,0 +1,34 @@
+{
+  "sessions": [
+    {
+      "sessionID": 1635779826,
+      "date": "1/11/2021",
+      "duration": "0h 2min 0sec"
+    },
+    {
+      "sessionID": 1635779953,
+      "date": "1/11/2021",
+      "duration": "0h 60min 60sec"
+    },
+    {
+      "sessionID": 1636296270,
+      "date": "0/11/2021",
+      "duration": "0h 1min 0sec"
+    },
+    {
+      "sessionID": 1636296487,
+      "date": "0/11/2021",
+      "duration": "0h 9min 0sec"
+    },
+    {
+      "sessionID": 1636297094,
+      "date": "0/11/2021",
+      "duration": "0h 2min 0sec"
+    },
+    {
+      "sessionID": 1637493205,
+      "date": "0/11/2021",
+      "duration": "0h 1min 0sec"
+    }
+  ]
+}

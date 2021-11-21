@@ -1,11 +1,51 @@
+const fs = require("fs");
+
 class Timer {
     constructor(bar) {
         this.bar = bar
+        this.sessionID = Math.floor(new Date().getTime() / 1000);
         this.refreshBar();
 
         this.hour = 0
         this.minute = 0
         this.second = 0
+    };
+
+    updateSession() {
+        var sessions = require("./sessions.json");
+
+        var sameSession = false;
+        const closeDate = new Date();
+        const parsedDate = `${closeDate.getDay()}/${closeDate.getMonth() + 1}/${closeDate.getFullYear()}`
+    
+        for (var date in sessions["sessions"]) {
+            if (sessions["sessions"][date].sessionID == this.sessionID) {
+                sameSession = true;
+
+                sessions["sessions"][date] = {
+                    sessionID: this.sessionID,
+                    date: parsedDate,
+                    duration: `${this.hour}h ${this.minute}min ${this.second}sec`
+                }
+                fs.writeFile(__dirname + '/sessions.json', JSON.stringify(sessions, null, 2), () => {});
+                break;
+            }
+        }
+
+        if (!(sameSession)) {
+            sessions["sessions"].push({
+                sessionID: this.sessionID,
+                date: parsedDate,
+                duration: `${this.hour}h ${this.minute}min ${this.second}sec`
+            });
+
+
+            fs.writeFile(__dirname + '/sessions.json', JSON.stringify(sessions, null, 2), err => {
+                if (err) {
+                    console.log(err)
+                }
+            });
+        }        
     };
 
     handleTimer() {
@@ -16,6 +56,7 @@ class Timer {
         if (this.second > 59) {
             this.second = 0
             this.minute++;
+            this.updateSession();
         }
 
         if (this.minute > 59) {
